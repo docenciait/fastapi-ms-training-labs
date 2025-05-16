@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: app_db
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  web:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - PYTHONPATH=/app
+
+volumes:
+  db_data:

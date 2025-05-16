@@ -1,0 +1,5 @@
+fastapi==0.110.0
+uvicorn==0.29.0
+databases[aiomysql]==0.8.0
+sqlalchemy==1.4.52
+aiomysql==0.2.0
